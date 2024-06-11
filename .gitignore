@@ -1,0 +1,7 @@
+# gitignore file for python projects
+# should i ignore the transcribeenv folder?
+transcribeenv/
+.venv/
+*.mp3
+*.wav
+tmp/
