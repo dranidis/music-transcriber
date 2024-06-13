@@ -5,3 +5,4 @@ transcribeenv/
 *.mp3
 *.wav
 tmp/
+__pycache__/
