@@ -31,7 +31,7 @@ class MusicTranscriberApp:
         self.play_button.pack(side=tk.LEFT)
 
         # Pause button
-        self.pause_button = tk.Button(button_frame, text="Pause", command=core.pause_mp3)
+        self.pause_button = tk.Button(button_frame, text="Stop", command=core.stop_mp3)
         self.pause_button.pack(side=tk.LEFT)
 
         # Slow down button
@@ -59,6 +59,11 @@ class MusicTranscriberApp:
 
         self.inc_plot_line_button = tk.Button(button_frame, text=">", command=self.plot.increase_loop_line)
         self.inc_plot_line_button.pack(side=tk.LEFT)   
+
+        # Bind the space key to the on_space method
+        self.root.bind('<space>', core.toggle_play_pause)
+        self.root.bind('b', core.mark_beat)
+        self.root.bind('m', core.mark_measure)
 
         self.core.load_mp3_from_file_path("/home/dimitris/Documents/Stepped-Green.mp3")
 
