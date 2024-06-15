@@ -41,7 +41,7 @@ class Plot:
         
         self.beat_axis = None
 
-        self.plot_downsample = 50
+        self.plot_downsample = 20
 
         self.plot_window = 500000 / self.plot_downsample  # Plot window size in samples
         self.plot_line_divisions = 8
@@ -134,7 +134,16 @@ class Plot:
 
         # print(f"Clicked at x={xdata}")
         # self.core.on_click(xdata)
-        self.core.on_click(event.xdata)
+        
+        x = event.xdata  * self.plot_downsample
+        start_at = int((x / self.core.sample_rate) * 1000)
+
+        self.core.on_plot_click(start_at)
+
+        self.current_plot_pos = int(start_at / 1000 * self.core.sample_rate / self.plot_downsample)
+        print(f"Clicked at x1={start_at}")
+
+        # self.plot.draw_plot()        
 
     def update_plot(self):
         if self.plot_data is not None:
@@ -171,9 +180,13 @@ class Plot:
         if self.core.loop_start is not None:
             loop_start_index = int(self.core.loop_start / 1000 * self.core.sample_rate / self.plot_downsample)
             self.loop_start_line.set_xdata([loop_start_index])
+        else:
+            self.loop_start_line.set_xdata([0])
         if self.core.loop_end is not None:
             loop_end_index = int(self.core.loop_end / 1000 * self.core.sample_rate / self.plot_downsample)
             self.loop_end_line.set_xdata([loop_end_index])
+        else:
+            self.loop_end_line.set_xdata([0])
 
         self.update_beat_axis()            
 

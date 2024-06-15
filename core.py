@@ -165,26 +165,12 @@ class Core:
     #     self.loop_start = start_at
     #     self.loop_end = None
 
-    def on_click(self, xdata):
-        # # return if the mouse if moving
-        # if event.button != 1:
-        #     return
-
-        x = xdata  * self.plot.plot_downsample
-        start_at = int((x / self.sample_rate) * 1000)
-
+    def on_plot_click(self, start_at):
         self.playing_data = get_audio_array(self.original_data, start_at/1000,
                                             self.original_data.shape[0]/self.sample_rate - start_at/1000,
                                             self.sample_rate)
         self.loop_start = start_at
         self.loop_end = None
-
-
-        self.plot.current_plot_pos = int(start_at / 1000 * self.sample_rate / self.plot.plot_downsample)
-
-        # self.plot.draw_plot()
-
-        print(f"Clicked at x1={start_at}")
 
     def stop_mp3(self):
         if self.playing:
